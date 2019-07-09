@@ -1,6 +1,6 @@
 import Vuex from 'vuex';
 import Vue from 'vue';
-import axios from './utils/request'
+import axios from '../util/request';
 
 Vue.use(Vuex)
 

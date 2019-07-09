@@ -1,7 +1,7 @@
 //wepback-client-conf.js
 const webpack = require('webpack')
 const merge = require('webpack-merge');
-const baseConfig = require('./webpack-base-conf');
+const baseConfig = require('./webpack.base.conf');
 const VueSSRClientPlugin = require('vue-server-renderer/client-plugin')
 
 module.exports = merge(baseConfig, {

@@ -1,0 +1,94 @@
+$baseFontSize:75px;
+// px转rem
+@function  px2rem($px){
+	@return $px / $baseFontSize * 1rem * 2;
+}
+//解决1px像素问题
+@mixin borders($position,$color){
+	#{$position}: .5px solid $color;
+	[data-dpr = "1"] & {
+		#{$position}: 1px solid $color;
+	}
+}
+// //高清图
+// @mixin setImg($address){
+// 	[data-dpr="3"] & {
+
+// 	}
+// 	[data-dpr="2"] & {
+
+// 	}
+// 	[data-dpr="1"] & {
+		
+// 	}
+// }
+// 背景图片地址和大小
+$important: !default;
+@mixin bis($url) { 
+	background-image: url($url);
+	background-repeat: no-repeat;
+	background-size: 100% 100%;
+}
+@mixin borderRadius($radius) {
+    -webkit-border-radius: $radius;
+    -moz-border-radius: $radius;
+    -ms-border-radius: $radius;
+    -o-border-radius: $radius;
+    border-radius: $radius;
+}
+//定位全屏
+@mixin allcover{
+	position:absolute;
+	top:0;
+	right:0;
+}
+//定位上下左右居中
+@mixin center {  
+	position: absolute;
+	top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+//定位上下居中
+@mixin ct {  
+	position: absolute;
+	top: 50%;
+    transform: translateY(-50%);
+}
+//定位左右居中
+@mixin cl {  
+	position: absolute;
+	left: 50%;
+    transform: translateX(-50%);
+}
+//宽高
+@mixin wh($width, $height){
+	width: $width;
+	height: $height;
+}
+//字体大小、行高、字体
+// @mixin font($size, $line-height, $family: 'Microsoft YaHei') {  
+// 	font: #{$size}/#{$line-height} $family;
+// }
+@mixin font($size, $height,  $color, $family: 'arial,Microsoft YaHei') {  
+	font-size: $size;
+	color: $color;
+	line-height: $height;
+	letter-spacing: 0;
+	font-family: $family;
+}
+//字体大小，颜色
+@mixin sc($size, $color,$import:$important){
+	font-size: $size $import;
+	color: $color $import;
+}
+//flex 布局和 子元素 对其方式
+@mixin fj($type: space-between){
+	display: flex;
+	justify-content: $type;
+}
+//1200px居中
+@mixin auto{
+	width: 1200px;
+    margin: 0 auto;
+}

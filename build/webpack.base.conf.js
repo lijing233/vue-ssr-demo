@@ -11,9 +11,14 @@ function resolve(dir) {
 
 const isProd = process.env.NODE_ENV === 'production'
 
+const extractSass = new ExtractTextPlugin({
+  filename: "[name].[contenthash].css",
+  disable: !isProd
+});
+
 module.exports = {
   devtool: isProd ? 'none' : 'cheap-module-source-map', // 此选项控制是否生成，以及如何生成 source map
-  mode: 'none',
+  mode: isProd ? 'production' : 'development',
   output: {
     path: resolve('../dist'),
     // publicPath: '/dist/',
@@ -22,7 +27,7 @@ module.exports = {
   resolve: {
     extensions: ['.js', '.vue', '.json'], // 自动解析确定的扩展
     alias: {
-      '@': resolve('src'),
+      '@': path.join(__dirname, '../src'),
     }
   },
   module: {
@@ -39,7 +44,12 @@ module.exports = {
         exclude: file => (
           /node_modules/.test(file) &&
           !/\.vue\.js/.test(file)
-        )
+        ),
+        options: {
+          "plugins": [
+            "dynamic-import-webpack"
+          ]
+        }
       },
       {
         test: /\.css$/,
@@ -57,17 +67,38 @@ module.exports = {
         }
       },
       // ** TODO ** : sass-loader 待添加
+      {
+        test: /\.scss$/,
+        use: extractSass.extract({
+          use: [
+            'vue-style-loader',
+            'css-loader',
+            'sass-loader'
+          ],
+        })
+      }
+
       // ** TODO ** : eslint-loader 待添加
     ]
   },
   plugins: [
     new VueLoaderPlugin(),
+    extractSass
     // ** TODO ** : 其他插件 待添加
 
     // new CleanWebpackPlugin(),
     // new webpack.NamedModulesPlugin(),
     // new webpack.HotModuleReplacementPlugin(),
-  ]
+  ],
+  optimization: {
+    splitChunks: {
+      chunks: 'async',
+      minSize: 30000,
+      minChunks: 2,
+      maxAsyncRequests: 5,
+      maxInitialRequests: 3
+    }
+  },
   //webpack 4 分割代码块的插件
   // optimization: {
   //   splitChunks: {

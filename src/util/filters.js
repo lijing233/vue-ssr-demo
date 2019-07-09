@@ -15,13 +15,13 @@ export function addDots (data) {
     };
   };
   return retCash
-},
+}
 
 // 手机号格式化 3-4-4
 function formatPhone (data) {
   if (data === '') return ''
   return `${data.substr(0, 3)} ${data.substr(3, 4)} ${data.substr(7)}`
-},
+}
 
 // 身份证格式化 111111*******0000
 function formatID (data) {
