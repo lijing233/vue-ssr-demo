@@ -1,18 +1,12 @@
 // entry-server.js
-import {
-  createApp
-} from './app'
+import { createApp } from './app'
 
 export default context => {
   // 因为有可能会是异步路由钩子函数或组件，所以我们将返回一个 Promise，
   // 以便服务器能够等待所有的内容在渲染前，
   // 就已经准备就绪。
   return new Promise((resolve, reject) => {
-    const {
-      app,
-      router,
-      store
-    } = createApp()
+    const { app, router, store } = createApp()
     // 设置服务器端 router 的位置
     router.push(context.url)
     // 等到 router 将可能的异步组件和钩子函数解析完
@@ -20,22 +14,17 @@ export default context => {
       const matchedComponents = router.getMatchedComponents();
       // 匹配不到的路由，执行 reject 函数，并返回 404
       if (!matchedComponents.length) {
-        return reject({
-          code: 404
-        })
+        return reject({ code: 404 })
       }
 
+      // Server Data Fetching 服务端数据预取
       // 对所有匹配的路由组件调用 `asyncData()`
       Promise.all(matchedComponents.map(Component => {
         if (Component && Component.asyncData) {
-          return Component.asyncData({
-            store,
-            route: router.currentRoute
-          })
+          return Component.asyncData({ store, route: router.currentRoute})
         }
       })).then(() => {
-        // console.log('store.state', store.state)
-        console.log('matchedComponents123', matchedComponents)
+        console.log('matchedComponents', matchedComponents)
         // 在所有预取钩子(preFetch hook) resolve 后，
         // 我们的 store 现在已经填充入渲染应用程序所需的状态。
         // 当我们将状态附加到上下文，
@@ -45,12 +34,10 @@ export default context => {
         // Promise 应该 resolve 应用程序实例，以便它可以渲染
         resolve(app)
       }).catch(reject)
-    }, reject => {
-      console.log(reject)
-    })
-    router.onError((err) => {
-      console.log('err', err)
-    })
+    }, reject)
+    // router.onError((err) => {
+    //   console.log('err', err)
+    // })
   })
   // return app
 }

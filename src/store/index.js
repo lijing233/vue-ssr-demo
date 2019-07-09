@@ -1,21 +1,28 @@
 import Vuex from 'vuex';
 import Vue from 'vue';
+import axios from './utils/request'
 
 Vue.use(Vuex)
 
 export function createStore() {
   return new Vuex.Store({
     state: {
-
+      homeInfo: ''
     },
     getters: {
 
     },
     mutations: {
-
+      setHomeInfo(state, res) {
+        state.homeInfo = res
+      }
     },
     actions: {
-
+      getHomeInfo({ commit }) {
+        return axios.get('/homeInfo').then((res) => {
+          commit('setHomeInfo', res.data.name)
+        })
+      }
     }
   })
 }

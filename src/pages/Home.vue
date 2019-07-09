@@ -1,10 +1,18 @@
 <!-- Home -->
 <template>
-  <div>This is Home Page</div>
+  <div>
+    <h2>This is Home Page</h2>
+    <div>vuex 获取homeInfo数据：{{homeInfo}}</div>
+  </div>
 </template>
 
 <script>
 export default {
+  asyncData ({ store, route }) {
+    // 触发 action 后，会返回 Promise
+    console.log('asyncData-Home', route);
+    return store.dispatch('getHomeInfo')
+  },
   name: 'Home',
   data () {
     return {
@@ -13,7 +21,12 @@ export default {
 
   components: {},
 
-  computed: {},
+  computed: {
+    // 从 store 的 state 对象中的获取 item。
+    homeInfo () {
+      return this.$store.state.homeInfo
+    }
+  },
 
   mounted() {},
 
