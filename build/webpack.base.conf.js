@@ -2,19 +2,16 @@
 const path = require('path');
 const webpack = require('webpack');
 const VueLoaderPlugin = require('vue-loader/lib/plugin')
-
+const MiniCssExtractPlugin = require('mini-css-extract-plugin')
+const FriendlyErrorsPlugin = require('friendly-errors-webpack-plugin')
 
 //把所有路径定位到项目工程根目录下
 function resolve(dir) {
   return path.resolve(__dirname, dir);
 }
 
+console.log('--当前环境--', process.env.NODE_ENV)
 const isProd = process.env.NODE_ENV === 'production'
-
-const extractSass = new ExtractTextPlugin({
-  filename: "[name].[contenthash].css",
-  disable: !isProd
-});
 
 module.exports = {
   devtool: isProd ? 'none' : 'cheap-module-source-map', // 此选项控制是否生成，以及如何生成 source map
@@ -52,62 +49,113 @@ module.exports = {
         }
       },
       {
+        test: /\.(png|jpe?g|gif|svg|ico)(\?.*)?$/,
+        use: {
+          loader: 'url-loader',
+          query: {
+            limit: 10000,
+            name: 'assets/images/[name].[hash:8].[ext]'
+          }
+        }
+      },
+      {
+        test: /\.(mp4|webm|ogg|mp3|wav|flac|aac)(\?.*)?$/,
+        loader: 'url-loader',
+        options: {
+          limit: 10000,
+          name: 'assets/images/[name].[hash:8].[ext]'
+        }
+      },
+      {
+        test: /\.(woff2?|eot|ttf|otf)(\?.*)?$/,
+        use: {
+          loader: 'url-loader',
+          query: {
+            limit: 10000,
+            name: 'assets/font/[name].[hash:8].[ext]'
+          }
+        }
+      },
+      {
         test: /\.css$/,
         use: [
-          'vue-style-loader',
+          isProd ? MiniCssExtractPlugin.loader : 'vue-style-loader', 
           'css-loader'
         ]
       },
       {
-        test: /\.(png|jpg|gif|svg)$/,
-        loader: 'url-loader',
-        options: {
-          limit: 10000,
-          name: '[name].[ext]?[hash]'
-        }
-      },
-      // ** TODO ** : sass-loader 待添加
-      {
         test: /\.scss$/,
-        use: extractSass.extract({
-          use: [
-            'vue-style-loader',
-            'css-loader',
-            'sass-loader'
-          ],
-        })
-      }
-
+        use: [
+          {
+            loader: isProd ? MiniCssExtractPlugin.loader : 'vue-style-loader',
+            options: {
+              hmr: !isProd,
+            },
+          },
+          'css-loader',
+          'sass-loader'
+        ],
+      },
       // ** TODO ** : eslint-loader 待添加
     ]
   },
   plugins: [
     new VueLoaderPlugin(),
-    extractSass
+    new MiniCssExtractPlugin({
+      filename: isProd ? '[name].[hash].css' : '[name].css',
+      chunkFilename: isProd ? '[id].[hash].css' : '[id].css'
+    }),
+    new FriendlyErrorsPlugin()
     // ** TODO ** : 其他插件 待添加
 
     // new CleanWebpackPlugin(),
     // new webpack.NamedModulesPlugin(),
     // new webpack.HotModuleReplacementPlugin(),
   ],
+
   optimization: {
-    splitChunks: {
+    runtimeChunk: {
+      name: 'manifest'
+    },
+    // minimizer: true, // 最小化，production模式默认true
+    splitChunks:{
       chunks: 'async',
       minSize: 30000,
-      minChunks: 2,
+      minChunks: 1,
       maxAsyncRequests: 5,
-      maxInitialRequests: 3
+      maxInitialRequests: 3,
+      name: false,
+      cacheGroups: {
+        vendor: {
+          name: 'vendor',
+          chunks: 'initial',
+          priority: -10,
+          reuseExistingChunk: false,
+          test: /node_modules\/(.*)\.js/
+        },
+        styles: {
+          name: 'styles',
+          test: /\.(scss|css)$/,
+          chunks: 'all',
+          minChunks: 1,
+          reuseExistingChunk: true,
+          enforce: true
+        }
+      }
     }
-  },
-  //webpack 4 分割代码块的插件
+  }
+
+  //webpack 4 默认分割代码块配置
   // optimization: {
   //   splitChunks: {
-  //     chunks: "async",
+  //     chunks: 'async',
   //     minSize: 30000,
+  //     maxSize: 0,
   //     minChunks: 1,
   //     maxAsyncRequests: 5,
   //     maxInitialRequests: 3,
   //     automaticNameDelimiter: '~',
+  //     automaticNameMaxLength: 30,
   //     name: true,
   //     cacheGroups: {
   //       vendors: {
@@ -121,7 +169,7 @@ module.exports = {
   //       }
   //     }
   //   }
-  // },
+  // }
 
   
 }
