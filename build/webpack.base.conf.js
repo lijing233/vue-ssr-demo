@@ -41,12 +41,7 @@ module.exports = {
         exclude: file => (
           /node_modules/.test(file) &&
           !/\.vue\.js/.test(file)
-        ),
-        options: {
-          "plugins": [
-            "dynamic-import-webpack"
-          ]
-        }
+        )
       },
       {
         test: /\.(png|jpe?g|gif|svg|ico)(\?.*)?$/,
@@ -112,38 +107,6 @@ module.exports = {
     // new webpack.NamedModulesPlugin(),
     // new webpack.HotModuleReplacementPlugin(),
   ],
-
-  optimization: {
-    runtimeChunk: {
-      name: 'manifest'
-    },
-    // minimizer: true, // 最小化，production模式默认true
-    splitChunks:{
-      chunks: 'async',
-      minSize: 30000,
-      minChunks: 1,
-      maxAsyncRequests: 5,
-      maxInitialRequests: 3,
-      name: false,
-      cacheGroups: {
-        vendor: {
-          name: 'vendor',
-          chunks: 'initial',
-          priority: -10,
-          reuseExistingChunk: false,
-          test: /node_modules\/(.*)\.js/
-        },
-        styles: {
-          name: 'styles',
-          test: /\.(scss|css)$/,
-          chunks: 'all',
-          minChunks: 1,
-          reuseExistingChunk: true,
-          enforce: true
-        }
-      }
-    }
-  }
 
   //webpack 4 默认分割代码块配置
   // optimization: {
