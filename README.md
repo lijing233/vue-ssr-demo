@@ -18,11 +18,21 @@ axios
 
 ### 1.sass部分提取文件，当配置mini-css-extract-plugin时打包成功，但使用到sass的页面不能正常访问
 
+### 2.eslint
+
+### 3.dev-server 本地环境部分开发
+
+### 4.koa代码优化，缓存机制等
+
+### 5.head管理
+
+### 6.ts(优先级低)
 
 
-### webpack4配置中遇到的问题和解决办法
 
-#### 1.路由懒加载在 webpack4 中报错
+## webpack4配置中遇到的问题和解决办法
+
+### 1.路由懒加载在 webpack4 中报错
 
 （**Support for the experimental syntax 'dynamicImport' isn't currently enabled**）
 
@@ -64,7 +74,7 @@ npm install --save-dev @babel/plugin-syntax-dynamic-import
 
 
 
-#### 2.使用 extract-text-webpack-plugin 报错
+### 2.使用 extract-text-webpack-plugin 报错
 
 webpack4中分割css代码使用mini-css-extract-plugin
 
@@ -72,7 +82,7 @@ webpack4中分割css代码使用mini-css-extract-plugin
 
 
 
-#### 3.配置webpack环境参数
+### 3.配置webpack环境参数
 
 npm script 中配置env.test参数为 lijing
 
@@ -94,7 +104,7 @@ module.exports = (env, argv) => {
 
 
 
-#### 4.file-loader
+### 4.file-loader
 
 我们配置url-loader来对较小图片做base64转化，以减少请求来优化新能
 
@@ -106,7 +116,7 @@ npm i -D file-loader
 
 
 
-#### 5.压缩JS及CSS文件
+### 5.压缩JS及CSS文件
 
 1.配置项
 
