@@ -14,6 +14,12 @@ axios
 
 
 
+## TODO:
+
+### 1.sass部分提取文件，当配置mini-css-extract-plugin时打包成功，但使用到sass的页面不能正常访问
+
+
+
 ### webpack4配置中遇到的问题和解决办法
 
 #### 1.路由懒加载在 webpack4 中报错
@@ -83,6 +89,53 @@ module.exports = (env, argv) => {
 	return {
 		... // 此处为配置项
 	}
+}
+```
+
+
+
+#### 4.file-loader
+
+我们配置url-loader来对较小图片做base64转化，以减少请求来优化新能
+
+但对于超出转化临界值的资源，url-loader是无法处理的，任然需要安装file-loader,即便我们不需要在配置中显现的配置它
+
+```shell
+npm i -D file-loader
+```
+
+
+
+#### 5.压缩JS及CSS文件
+
+1.配置项
+
+```
+optimization.minimizer: true
+```
+
+2.插件
+
+```js
+const UglifyJsPlugin = require("uglifyjs-webpack-plugin")
+const OptimizeCSSPlugin = require('optimize-css-assets-webpack-plugin')
+
+new OptimizeCSSPlugin()
+或
+module.exports = {
+    //...
+    optimization: {
+        minimizer: [
+            // js mini
+            new UglifyJsPlugin({
+              cache: true,
+              parallel: true,
+              sourceMap: false // set to true if you want JS source maps
+            }),
+            // css mini
+            new OptimizeCSSPlugin({})
+        ]
+    }
 }
 ```
 

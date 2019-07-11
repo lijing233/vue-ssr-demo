@@ -2,9 +2,10 @@
 const path = require('path');
 const webpack = require('webpack');
 const VueLoaderPlugin = require('vue-loader/lib/plugin')
-const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const FriendlyErrorsPlugin = require('friendly-errors-webpack-plugin')
 const CopyWebpackPlugin = require('copy-webpack-plugin')
+const MiniCssExtractPlugin = require('mini-css-extract-plugin')
+const OptimizeCSSPlugin = require('optimize-css-assets-webpack-plugin')
 
 //把所有路径定位到项目工程根目录下
 function resolve(dir) {
@@ -72,6 +73,8 @@ module.exports = {
           }
         }
       },
+
+      // // 使用MiniCssExtractPlugin
       {
         test: /\.css$/,
         use: [
@@ -82,37 +85,87 @@ module.exports = {
       {
         test: /\.scss$/,
         use: [
-          {
-            loader: isProd ? MiniCssExtractPlugin.loader : 'vue-style-loader',
-            options: {
-              hmr: !isProd,
-            },
-          },
+          'vue-style-loader',
           'css-loader',
           'sass-loader'
-        ],
+        ]
+        
+        // 这样配置在请求使用sass的页面时会报错
+        // use: isProd ? [
+        //   {
+        //     loader: MiniCssExtractPlugin.loader,
+        //   },
+        //   'css-loader',
+        //   'sass-loader'
+        // ] : [
+        //   'vue-style-loader',
+        //   'css-loader',
+        //   'sass-loader'
+        // ]
       },
+
+
       // ** TODO ** : eslint-loader 待添加
     ]
   },
-  plugins: [
+  plugins: isProd ? [
     new VueLoaderPlugin(),
     new MiniCssExtractPlugin({
-      filename: isProd ? '[name].[hash].css' : '[name].css',
-      chunkFilename: isProd ? '[id].[hash].css' : '[id].css'
+      filename: '[name].[hash].css',
+      chunkFilename: '[id].[hash].css'
     }),
-    new FriendlyErrorsPlugin(),
+
     new CopyWebpackPlugin([{
       from: resolve('../public'),
       to: resolve('../dist/public'),
       ignore: ['.*', 'index.template.html']
     }]),
+    new OptimizeCSSPlugin()
+  ] : [
+    new VueLoaderPlugin(),
+    new FriendlyErrorsPlugin(),
+    
+    
     // ** TODO ** : 其他插件 待添加
-
-    // new CleanWebpackPlugin(),
     // new webpack.NamedModulesPlugin(),
     // new webpack.HotModuleReplacementPlugin(),
   ],
+
+  // optimization: {
+  //   splitChunks:{
+  //     chunks: 'async',
+  //     minSize: 30000,
+  //     maxSize: 0,
+  //     minChunks: 1,
+  //     maxAsyncRequests: 5,
+  //     maxInitialRequests: 3,
+  //     automaticNameDelimiter: '~',
+  //     automaticNameMaxLength: 30,
+  //     name: true,
+  //     cacheGroups: {
+  //       vendor: {
+  //         name: 'vendor',
+  //         chunks: 'initial',
+  //         priority: -10,
+  //         reuseExistingChunk: false,
+  //         test: /node_modules\/(.*)\.js/
+  //       },
+  //       // styles: {
+  //       //   name: 'styles',
+  //       //   test: /\.(scss|css)$/,
+  //       //   chunks: 'all',
+  //       //   minChunks: 1,
+  //       //   reuseExistingChunk: true,
+  //       //   enforce: true
+  //       // },
+  //       default: {
+  //         minChunks: 2,
+  //         priority: -20,
+  //         reuseExistingChunk: true
+  //       }
+  //     }
+  //   }
+  // }
 
   //webpack 4 默认分割代码块配置
   // optimization: {

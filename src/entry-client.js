@@ -1,6 +1,5 @@
 import Vue from 'vue'
 import { createApp } from './app'
-const {app, router, store} = createApp();
 import ProgressBar from './plugins/ProgressBar/ProgressBar.vue'
 
 // global progress bar
@@ -37,6 +36,8 @@ Vue.mixin({
     }
   }
 })
+
+const {app, router, store} = createApp();
 
 // prime the store with server-initialized state.
 // the state is determined during SSR and inlined in the page markup.
