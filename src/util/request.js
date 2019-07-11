@@ -46,7 +46,6 @@ const codeMessage = {
 
 // 检查接口状态码
 function checkStatus (response) {
-  console.log(response)
   if (response.status >= 200 && response.status < 300) {
     return response
   }

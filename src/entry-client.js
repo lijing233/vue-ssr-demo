@@ -1,6 +1,11 @@
 import Vue from 'vue'
 import { createApp } from './app'
 const {app, router, store} = createApp();
+import ProgressBar from './plugins/ProgressBar/ProgressBar.vue'
+
+// global progress bar
+const bar = Vue.prototype.$bar = new Vue(ProgressBar).$mount()
+document.body.appendChild(bar.$el)
 
 // Vue.mixin({
 //   beforeMount () {
@@ -56,20 +61,20 @@ router.onReady(() => {
       return diffed || (diffed = (prevMatched[i] !== c))
     })
 
-    if (!activated.length) {
+    const asyncDataHooks = activated.map(c => c.asyncData).filter(_ => _)
+    if (!asyncDataHooks.length) {
       return next()
     }
 
     // 这里如果有加载指示器 (loading indicator)，就触发
-
+    bar.start()
     Promise.all(activated.map(c => {
       if (c.asyncData) {
         return c.asyncData({ store, route: to })
       }
     })).then(() => {
-
       // 停止加载指示器(loading indicator)
-
+      bar.finish()
       next()
     }).catch(next)
   })

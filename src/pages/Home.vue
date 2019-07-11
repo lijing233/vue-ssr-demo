@@ -10,7 +10,7 @@
 export default {
   asyncData ({ store, route }) {
     // 触发 action 后，会返回 Promise
-    console.log('asyncData-Home', route);
+    // console.log('asyncData-Home', route);
     return store.dispatch('getHomeInfo')
   },
   name: 'Home',
@@ -28,7 +28,9 @@ export default {
     }
   },
 
-  mounted() {},
+  mounted() {
+    console.log('window.__INITIAL_STATE__', window.__INITIAL_STATE__);
+  },
 
   methods: {}
 }

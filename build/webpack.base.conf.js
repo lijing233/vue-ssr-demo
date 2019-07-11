@@ -4,6 +4,7 @@ const webpack = require('webpack');
 const VueLoaderPlugin = require('vue-loader/lib/plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const FriendlyErrorsPlugin = require('friendly-errors-webpack-plugin')
+const CopyWebpackPlugin = require('copy-webpack-plugin')
 
 //把所有路径定位到项目工程根目录下
 function resolve(dir) {
@@ -58,7 +59,7 @@ module.exports = {
         loader: 'url-loader',
         options: {
           limit: 10000,
-          name: 'assets/images/[name].[hash:8].[ext]'
+          name: 'assets/media/[name].[hash:8].[ext]'
         }
       },
       {
@@ -100,7 +101,12 @@ module.exports = {
       filename: isProd ? '[name].[hash].css' : '[name].css',
       chunkFilename: isProd ? '[id].[hash].css' : '[id].css'
     }),
-    new FriendlyErrorsPlugin()
+    new FriendlyErrorsPlugin(),
+    new CopyWebpackPlugin([{
+      from: resolve('../public'),
+      to: resolve('../dist/public'),
+      ignore: ['.*', 'index.template.html']
+    }]),
     // ** TODO ** : 其他插件 待添加
 
     // new CleanWebpackPlugin(),

@@ -1,8 +1,9 @@
 <!-- Mine -->
 <template>
-  <div>
+  <div class="mine-container">
     <h2>This is Mine Page</h2>
     <div>{{ fooCount }}</div>
+    <img src="../assets/images/testImg.jpg" alt="">
   </div>
 </template>
 
@@ -41,5 +42,12 @@ export default {
 }
 
 </script>
-<style scoped>
+
+<style lang="scss" scoped>
+.mine-container{
+  img{
+    width: 100%;
+    height: 300px;
+  }
+}
 </style>
