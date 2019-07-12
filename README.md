@@ -12,13 +12,21 @@ axios
 
 
 
+client部分公共请求添加 进度条
+
 
 
 ## TODO:
 
 ### 1.sass部分提取文件，当配置mini-css-extract-plugin时打包成功，但使用到sass的页面不能正常访问
 
+fixed! -- 0712
+
+服务端不可分割css，所以对webpack服务端和客户端配置做了区分，客户端部分进行代码分割，服务端不做
+
 ### 2.eslint
+
+done! 已添加 -- 0712
 
 ### 3.dev-server 本地环境部分开发
 
@@ -27,6 +35,8 @@ axios
 ### 5.head管理
 
 ### 6.ts(优先级低)
+
+#### 7.postcss-loader
 
 
 

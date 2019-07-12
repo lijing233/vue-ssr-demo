@@ -1,12 +1,21 @@
 <template>
   <div id="app">
     <h1>Vue SSR DEMO</h1>
-    <router-link to="/">HOME</router-link>
-    <router-link to="/test">TEST</router-link>
-    <router-link to="/store">STORE</router-link>
-    <div class="line"></div>
-    <transition name="fade" mode="out-in">
-      <router-view class="view"></router-view>
+    <router-link to="/">
+      HOME
+    </router-link>
+    <router-link to="/test">
+      TEST
+    </router-link>
+    <router-link to="/store">
+      STORE
+    </router-link>
+    <div class="line" />
+    <transition
+      name="fade"
+      mode="out-in"
+    >
+      <router-view class="view" />
     </transition>
   </div>
 </template>

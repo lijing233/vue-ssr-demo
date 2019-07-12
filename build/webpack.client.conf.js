@@ -1,10 +1,18 @@
 //wepback-client-conf.js
 const webpack = require('webpack')
-const merge = require('webpack-merge');
+const path = require('path')
+const merge = require('webpack-merge')
 const baseConfig = require('./webpack.base.conf');
 const VueSSRClientPlugin = require('vue-server-renderer/client-plugin')
+const CopyWebpackPlugin = require('copy-webpack-plugin')
+const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 
-module.exports = merge(baseConfig, {
+const isProd = process.env.NODE_ENV === 'production'
+function resolve(dir) {
+  return path.resolve(__dirname, dir);
+}
+
+const clientConfig = merge(baseConfig, {
   //server端入口文件
   entry: {
     client: './src/entry-client.js'
@@ -15,10 +23,43 @@ module.exports = merge(baseConfig, {
     }
   },
 
+  module: {
+    rules: [
+      // // 使用MiniCssExtractPlugin
+      {
+        test: /\.css$/,
+        use: [
+          isProd ? MiniCssExtractPlugin.loader : 'vue-style-loader', 
+          'css-loader'
+        ]
+      },
+      {
+        test: /\.scss$/,
+        // 这样配置在请求使用sass的页面时会报错
+        use: isProd ? [
+          {
+            loader: MiniCssExtractPlugin.loader,
+          },
+          'css-loader',
+          'sass-loader'
+        ] : [
+          'vue-style-loader',
+          'css-loader',
+          'sass-loader'
+        ]
+      },
+    ]
+  },
+
   plugins: [
     new webpack.DefinePlugin({
       'process.env.VUE_ENV': '"client"'
     }),
+    new CopyWebpackPlugin([{
+      from: resolve('../public'),
+      to: resolve('../dist/public'),
+      ignore: ['.*', 'index.template.html']
+    }]),
     // 此插件在输出目录中
     // 生成 `vue-ssr-client-manifest.json`。
     new VueSSRClientPlugin()
@@ -59,6 +100,14 @@ module.exports = merge(baseConfig, {
 
 })
 
+if (isProd) {
+  clientConfig.plugins.push(
+    new MiniCssExtractPlugin({
+      filename: 'css/[name].[hash].css',
+      chunkFilename: 'css/[id].[hash].css'
+    }),
+  )
+}
 
 // SWPrecacheWebpackPlugin是一个webpack插件，用于使用service worker来缓存外部项目依赖项。 它将使用sw-precache生成service worker文件并将其添加到您的构建目录。为了在service worker中生成预缓存的名单, 这个插件必须应用在assets已经被webpack打包之后
 // https://www.npmjs.com/package/sw-precache-webpack-plugin
@@ -92,3 +141,5 @@ module.exports = merge(baseConfig, {
 //     })
 //   )
 // }
+
+module.exports = clientConfig

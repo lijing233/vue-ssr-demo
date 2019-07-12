@@ -1,11 +1,10 @@
 //wepback-base-conf.js
 const path = require('path');
-const webpack = require('webpack');
+// const webpack = require('webpack');
 const VueLoaderPlugin = require('vue-loader/lib/plugin')
 const FriendlyErrorsPlugin = require('friendly-errors-webpack-plugin')
-const CopyWebpackPlugin = require('copy-webpack-plugin')
-const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const OptimizeCSSPlugin = require('optimize-css-assets-webpack-plugin')
+const EslintFriendlyFormatterPlugin = require('eslint-friendly-formatter')
 
 //把所有路径定位到项目工程根目录下
 function resolve(dir) {
@@ -21,7 +20,7 @@ module.exports = {
   output: {
     path: resolve('../dist'),
     // publicPath: '/dist/',
-    filename: '[name].[chunkhash].js'
+    filename: 'js/[name].[chunkhash].js'
   },
   resolve: {
     extensions: ['.js', '.vue', '.json'], // 自动解析确定的扩展
@@ -31,6 +30,17 @@ module.exports = {
   },
   module: {
     rules: [
+      {
+        test: /\.(js|vue)$/,
+        loader: 'eslint-loader',
+        enforce: 'pre',
+        //指定检查的目录
+        include: [resolve('../src')],
+        //eslint检查报告的格式规范
+        options: {
+          formatter: EslintFriendlyFormatterPlugin
+        }
+      },
       {
         test: /\.vue$/,
         loader: 'vue-loader'
@@ -73,59 +83,17 @@ module.exports = {
           }
         }
       },
-
-      // // 使用MiniCssExtractPlugin
-      {
-        test: /\.css$/,
-        use: [
-          isProd ? MiniCssExtractPlugin.loader : 'vue-style-loader', 
-          'css-loader'
-        ]
-      },
-      {
-        test: /\.scss$/,
-        use: [
-          'vue-style-loader',
-          'css-loader',
-          'sass-loader'
-        ]
-        
-        // 这样配置在请求使用sass的页面时会报错
-        // use: isProd ? [
-        //   {
-        //     loader: MiniCssExtractPlugin.loader,
-        //   },
-        //   'css-loader',
-        //   'sass-loader'
-        // ] : [
-        //   'vue-style-loader',
-        //   'css-loader',
-        //   'sass-loader'
-        // ]
-      },
-
-
       // ** TODO ** : eslint-loader 待添加
     ]
   },
   plugins: isProd ? [
     new VueLoaderPlugin(),
-    new MiniCssExtractPlugin({
-      filename: '[name].[hash].css',
-      chunkFilename: '[id].[hash].css'
-    }),
-
-    new CopyWebpackPlugin([{
-      from: resolve('../public'),
-      to: resolve('../dist/public'),
-      ignore: ['.*', 'index.template.html']
-    }]),
     new OptimizeCSSPlugin()
   ] : [
     new VueLoaderPlugin(),
     new FriendlyErrorsPlugin(),
-    
-    
+
+
     // ** TODO ** : 其他插件 待添加
     // new webpack.NamedModulesPlugin(),
     // new webpack.HotModuleReplacementPlugin(),
@@ -193,5 +161,5 @@ module.exports = {
   //   }
   // }
 
-  
+
 }

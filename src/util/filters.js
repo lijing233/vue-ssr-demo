@@ -11,20 +11,20 @@ export function addDots (data) {
       counter = 0
       if (i !== 0) {
         retCash = `,${retCash}`
-      };
-    };
-  };
+      }
+    }
+  }
   return retCash
 }
 
 // 手机号格式化 3-4-4
-function formatPhone (data) {
+export function formatPhone (data) {
   if (data === '') return ''
   return `${data.substr(0, 3)} ${data.substr(3, 4)} ${data.substr(7)}`
 }
 
 // 身份证格式化 111111*******0000
-function formatID (data) {
+export function formatID (data) {
   if (data === '') return ''
   return data.replace(/^(.{6})(?:\d+)(.{4})$/, '$1******$2')
 }
