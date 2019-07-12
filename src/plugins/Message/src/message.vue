@@ -20,6 +20,7 @@
 <script>
 export default {
   name: '',
+  components: {},
   data () {
     return {
       visible: false,
@@ -30,13 +31,8 @@ export default {
       closed: false
     }
   },
-  components: {},
 
   computed: {},
-
-  mounted () {
-    this.startTimer()
-  },
 
   watch: {
     closed (newVal) {
@@ -45,6 +41,10 @@ export default {
         this.$el.addEventListener('transitionend', this.destroyElement)
       }
     }
+  },
+
+  mounted () {
+    this.startTimer()
   },
 
   methods: {

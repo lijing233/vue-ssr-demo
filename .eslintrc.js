@@ -62,7 +62,7 @@ module.exports = {
     // 不允许在 case 子句中使用词法声明
     "no-case-declarations":2,
     // 禁止出现空函数.如果一个函数包含了一条注释，它将不会被认为有问题。
-    "no-empty-function":2,
+    "no-empty-function":1,
     // 禁用 eval()
     "no-eval": 2,
     // 禁止使用 var 多次声明同一变量

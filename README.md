@@ -2,6 +2,8 @@
 
 vue
 
+vue-router
+
 webpack 4.x
 
 Koa

@@ -3,7 +3,10 @@
   <div class="mine-container">
     <h2>This is Mine Page</h2>
     <!-- <div>{{ fooCount }}</div> -->
-    <img src="../assets/images/testImg.jpg" alt="">
+    <img
+      src="../assets/images/testImg.jpg"
+      alt=""
+    >
   </div>
 </template>
 
@@ -17,12 +20,12 @@ export default {
   // },
 
   name: 'Mine',
+
+  components: {},
   data () {
     return {
     };
   },
-
-  components: {},
 
   computed: {
     // fooCount () {
@@ -30,7 +33,7 @@ export default {
     // }
   },
 
-  mounted() {},
+  // mounted() {},
 
   // 重要信息：当多次访问路由时，
   // 避免在客户端重复注册模块。

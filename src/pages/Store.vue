@@ -1,21 +1,23 @@
 <!-- Store -->
 <template>
-  <div class="store">This is Store Page</div>
+  <div class="store">
+    This is Store Page
+  </div>
 </template>
 
 <script>
 export default {
   name: 'Store',
+
+  components: {},
   data () {
     return {
     };
   },
 
-  components: {},
-
   computed: {},
 
-  mounted() {},
+  // mounted() {},
 
   methods: {}
 }
