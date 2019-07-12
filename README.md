@@ -34,6 +34,8 @@ done! 已添加 -- 0712
 
 ### 4.koa代码优化，缓存机制等
 
+​	const HtmlMinifier = require('html-minifier').minify
+
 ### 5.head管理
 
 ### 6.ts(优先级低)

@@ -5,7 +5,7 @@ const koaStatic = require('koa-static');
 const router = require('./router')
 
 const resolve = file => path.resolve(__dirname, file)
-const isProd = process.env.NODE_ENV === 'production'
+// const isProd = process.env.NODE_ENV === 'production'
 
 const app = new Koa()
 
@@ -17,5 +17,5 @@ app.use(koaStatic(resolve('../dist', {
 app.use(router.routes())
 
 app.listen(config.app.port || 3000, '0.0.0.0', () => {
-  console.log(`> server is staring...`)
+  console.log('> server is staring...')
 })
