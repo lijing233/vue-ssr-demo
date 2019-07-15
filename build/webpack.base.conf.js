@@ -19,7 +19,7 @@ module.exports = {
   mode: isProd ? 'production' : 'development',
   output: {
     path: resolve('../dist'),
-    // publicPath: '/dist/',
+    publicPath: '/',
     filename: 'js/[name].[chunkhash].js'
   },
   resolve: {
@@ -30,17 +30,18 @@ module.exports = {
   },
   module: {
     rules: [
-      {
-        test: /\.(js|vue)$/,
-        loader: 'eslint-loader',
-        enforce: 'pre',
-        //指定检查的目录
-        include: [resolve('../src')],
-        //eslint检查报告的格式规范
-        options: {
-          formatter: EslintFriendlyFormatterPlugin
-        }
-      },
+      // {
+      //   test: /\.(js|vue)$/,
+      //   loader: 'eslint-loader',
+      //   enforce: 'pre',
+      //   //指定检查的目录
+      //   include: [resolve('../src')],
+      //   //eslint检查报告的格式规范
+      //   options: {
+      //     formatter: EslintFriendlyFormatterPlugin,
+      //     emitWarning: true
+      //   }
+      // },
       {
         test: /\.vue$/,
         loader: 'vue-loader'

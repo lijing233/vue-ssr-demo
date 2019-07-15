@@ -15,7 +15,7 @@ function resolve(dir) {
 const clientConfig = merge(baseConfig, {
   //server端入口文件
   entry: {
-    client: './src/entry-client.js'
+    app: './src/entry-client.js'
   },
   resolve: {
     alias: {
@@ -29,7 +29,7 @@ const clientConfig = merge(baseConfig, {
       {
         test: /\.css$/,
         use: [
-          isProd ? MiniCssExtractPlugin.loader : 'vue-style-loader', 
+          isProd ? MiniCssExtractPlugin.loader : 'vue-style-loader',
           'css-loader'
         ]
       },
@@ -67,35 +67,35 @@ const clientConfig = merge(baseConfig, {
 
   // webpack4不再提供 webpack.optimize.CommonsChunkPlugin 来分割代码，需要用到新的属性 optimization.splitChunks
   // optimization: {
-    // runtimeChunk: {
-    //   name: 'manifest'
-    // },
-    // minimizer: true, // 最小化，production模式默认true
-    // splitChunks:{
-    //   chunks: 'async',
-    //   minSize: 30000,
-    //   minChunks: 1,
-    //   maxAsyncRequests: 5,
-    //   maxInitialRequests: 3,
-    //   name: false,
-    //   cacheGroups: {
-    //     vendor: {
-    //       name: 'vendor',
-    //       chunks: 'initial',
-    //       priority: -10,
-    //       reuseExistingChunk: false,
-    //       test: /node_modules\/(.*)\.js/
-    //     },
-    //     styles: {
-    //       name: 'styles',
-    //       test: /\.(scss|css)$/,
-    //       chunks: 'all',
-    //       minChunks: 1,
-    //       reuseExistingChunk: true,
-    //       enforce: true
-    //     }
-    //   }
-    // }
+  // runtimeChunk: {
+  //   name: 'manifest'
+  // },
+  // minimizer: true, // 最小化，production模式默认true
+  // splitChunks:{
+  //   chunks: 'async',
+  //   minSize: 30000,
+  //   minChunks: 1,
+  //   maxAsyncRequests: 5,
+  //   maxInitialRequests: 3,
+  //   name: false,
+  //   cacheGroups: {
+  //     vendor: {
+  //       name: 'vendor',
+  //       chunks: 'initial',
+  //       priority: -10,
+  //       reuseExistingChunk: false,
+  //       test: /node_modules\/(.*)\.js/
+  //     },
+  //     styles: {
+  //       name: 'styles',
+  //       test: /\.(scss|css)$/,
+  //       chunks: 'all',
+  //       minChunks: 1,
+  //       reuseExistingChunk: true,
+  //       enforce: true
+  //     }
+  //   }
+  // }
   // }
 
 })
