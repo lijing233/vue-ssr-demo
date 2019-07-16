@@ -9,10 +9,11 @@ export function createRouter () {
     fallback: false, // 浏览器不支持 history.pushState 控制路由是否应该回退到 hash 模式
     scrollBehavior: () => ({ y: 0 }),
     routes: [
-      {
-        path: '/', component: () => import('@/pages/Home.vue') },
+      { path: '/', component: () => import('@/pages/Home.vue') },
       { path: '/test', component: () => import('@/pages/Test.vue') },
-      { path: '/store', component: () => import('@/pages/Store.vue') }
+      { path: '/store', component: () => import('@/pages/Store.vue') },
+      { path: '/404', component: () => import('@/pages/errorPage/404.vue') },
+      { path: '/500', component: () => import('@/pages/errorPage/500.vue') },
     ]
   })
 }
