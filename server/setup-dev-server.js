@@ -6,10 +6,10 @@ const webpack = require('webpack')
 const chokidar = require('chokidar')
 const serverConfig = require('../build/webpack.server.conf')
 const webConfig = require('../build/webpack.client.conf')
-const webpackDevMiddleware = require('./dev-middleware')
-const webpackHotMiddleware = require('./hot-middleware')
+const webpackDevMiddleware = require('./middleware/dev-middleware')
+const webpackHotMiddleware = require('./middleware/hot-middleware')
 // const readline = require('readline')
-const conf = require('./server.config')
+const conf = require('./config/server.config')
 const {
   openBrowser
 } = require('./lib')

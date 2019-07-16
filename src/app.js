@@ -4,7 +4,7 @@ import { createRouter } from './router'
 import { createStore } from './store'
 import { sync } from 'vuex-router-sync'
 import * as filters from './util/filters'
-// import './styles/normalize.css'
+import './styles/normalize.css'
 
 // register global utility filters.
 Object.keys(filters).forEach(key => {

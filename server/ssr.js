@@ -35,8 +35,8 @@ module.exports = app => {
       //   removeComments: false
       // })
       const template = fs.readFileSync(templateHtmlPath, 'utf-8')
-      const bundle = require(pathResolve('../dist/web/vue-ssr-server-bundle.json'))
-      const clientManifest = require(pathResolve('../dist/web/vue-ssr-client-manifest.json'))
+      const bundle = require(pathResolve('../dist/vue-ssr-server-bundle.json'))
+      const clientManifest = require(pathResolve('../dist/vue-ssr-client-manifest.json'))
       renderer = createRenderer(bundle, {
         template,
         clientManifest

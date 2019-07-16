@@ -6,6 +6,7 @@ axios.defaults.withCredentials = true
 
 axios.interceptors.request.use(
   config => {
+
     return config
   },
   error => {
@@ -81,7 +82,7 @@ function errorCatch (error) {
   // }
 }
 
-// axios默认值
+// axios 默认值
 // axios.defaults.baseURL = process.env.VUE_APP_BASE_API
 axios.defaults.baseURL = ' https://www.easy-mock.com/mock/5a6586044e4c5c26414f5f6c/example'
 axios.defaults.headers.common['Content-Type'] = 'application/json'

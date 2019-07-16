@@ -33,6 +33,46 @@ Koa2
 
 
 
+## 添加了日志系统
+
+- 使用koa-logger进行基本日志打印
+
+- 使用log4js，并封装相关方法，进行日志收集和日志文件保存
+
+  详情见 /server/config/log.config.js , /server/utils/log.js
+
+  ```javascript
+  // 引入
+  require(~/utils/log.js)
+  // 使用
+  logInfo('test-inof')
+  logResponse('test-response')
+  logHandle('test-handle')
+  logError('test-error')
+  ```
+
+  
+
+- 日志保存在 /log 文件夹中
+
+  ```shell
+  npm run clearlog  # 清空日志
+  ```
+
+  
+
+
+
+## 注意事项
+
+### 1.vue的生命周期钩子函数中，  **beforeCreate**和 **created** 会在服务器端渲染(SSR)过程中被调用
+
+### 2.使用window、document对象之前需要判断加载环境（process.env.VUE_ENV）
+
+### 3.vue-router 路由模式必须为history
+
+
+
 ## TODO:
 
 ### 1.sass部分提取文件，当配置mini-css-extract-plugin时打包成功，但使用到sass的页面不能正常访问
@@ -60,6 +100,8 @@ done! -- 0716
 ### 7.postcss-loader
 
 ### 8.koa日志、路由异常处理、重定向等
+
+添加日志记录，日志收集，打印日志公共方法 -- 0716
 
 
 

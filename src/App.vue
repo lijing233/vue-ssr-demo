@@ -28,7 +28,9 @@
 .fade-enter, .fade-leave-active {
   opacity: 0;
 }
+</style>
 
+<style lang="scss" scoped>
 .line{
   width: 100%;
   height: 1px;
@@ -36,3 +38,4 @@
   margin: 40px 0;
 }
 </style>
+
