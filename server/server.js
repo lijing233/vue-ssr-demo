@@ -10,7 +10,7 @@ const resolve = file => path.resolve(__dirname, file)
 const isProd = process.env.NODE_ENV === 'production'
 const SSR = require('./ssr')
 
-// https证书问题（待补充）
+// https证书问题会报错（待补充）
 process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0'
 
 const app = new Koa()

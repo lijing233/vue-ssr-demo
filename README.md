@@ -1,20 +1,35 @@
 # Vue-SSR-Demo
 
+
+
+## 使用说明
+
+```shell
+git clone https://github.com/lijing233/vue-ssr-demo.git
+cd vue-ssr-demo
+npm install
+# 运行开发环境
+npm run dev
+# 打包并运行生产环境
+npm run build
+npm run start
+```
+
+
+
+## 使用到的相关技术点
+
 vue
 
 vue-router
-
-webpack 4.x
-
-Koa
 
 vuex
 
 axios
 
+webpack 4.x
 
-
-client部分公共请求添加 进度条
+Koa2
 
 
 
@@ -32,6 +47,8 @@ done! 已添加 -- 0712
 
 ### 3.dev-server 本地环境部分开发
 
+done! -- 0716
+
 ### 4.koa代码优化，缓存机制等
 
 ​	const HtmlMinifier = require('html-minifier').minify
@@ -40,7 +57,13 @@ done! 已添加 -- 0712
 
 ### 6.ts(优先级低)
 
-#### 7.postcss-loader
+### 7.postcss-loader
+
+### 8.koa日志、路由异常处理、重定向等
+
+
+
+
 
 
 

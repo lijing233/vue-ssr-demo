@@ -4,14 +4,14 @@ const path = require('path')
 const MFS = require('memory-fs') // 一个简单的内存文件系统。在javascript对象中保存数据
 const chokidar = require('chokidar') // node文件监控插件
 const chalk = require('chalk')
-const clientConfig = require('../build/webpack.client.conf')
-const serverConfig = require('../build/webpack.server.conf')
-const conf = require('./server.config')
+const clientConfig = require('../../build/webpack.client.conf')
+const serverConfig = require('../../build/webpack.server.conf')
+const conf = require('../server.config')
 const {
   openBrowser
-} = require('./lib')
-const webpackDevMiddleware = require('./dev-middleware')
-const webpackHotMiddleware = require('./hot-middleware')
+} = require('../lib')
+const webpackDevMiddleware = require('../dev-middleware')
+const webpackHotMiddleware = require('../hot-middleware')
 
 const readFile = (fs, file) => {
   try {
