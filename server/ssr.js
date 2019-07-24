@@ -19,7 +19,7 @@ module.exports = app => {
           max: 1000,
           maxAge: 1000 * 60 * 15
         }),
-        basedir: pathResolve('./dist'),
+        basedir: pathResolve('../dist'),
         runInNewContext: false
       }))
     }
@@ -69,29 +69,31 @@ module.exports = app => {
       }
 
 
+      console.log('context', context);
+      console.log('ctx.type :', ctx.type);
       try {
         status = 200
-        console.log('context', context);
         html = await renderer.renderToString(context)
       } catch (e) {
         if (e.message === '404') {
           status = 404
-          // html = '404 | Not Found'
+          html = '404 | Not Found'
           /* TODO: 处理重定向 */
-          context.url = '/404'
-          context.title = status
-          html = await renderer.renderToString(context)
+          // context.url = '/404'
+          // context.title = status
+          // html = await renderer.renderToString(context)
         } else {
           status = 500
           // console.log(e)
           console.log(chalk.red('\nError: '), e.message)
-          // html = '500 | Internal Server Error'
+          html = '500 | Internal Server Error'
           /* TODO: 处理重定向 */
-          context.url = '/500'
-          context.title = status
-          html = await renderer.renderToString(context)
+          // context.url = '/500'
+          // context.title = status
+          // html = await renderer.renderToString(context)
         }
       }
+      console.log('try-catch-end');
       ctx.type = 'html'
       ctx.status = status || ctx.status
       ctx.body = html
