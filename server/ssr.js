@@ -75,13 +75,17 @@ module.exports = app => {
         status = 200
         html = await renderer.renderToString(context)
       } catch (e) {
-        if (e.message === '404') {
+        console.log('e :', e);
+        console.log(e.code === 404);
+        console.log(e.code === '404');
+        if (e.code === 404) {
           status = 404
           html = '404 | Not Found'
           /* TODO: 处理重定向 */
           // context.url = '/404'
           // context.title = status
           // html = await renderer.renderToString(context)
+          // ctx.redirect('/404')
         } else {
           status = 500
           // console.log(e)

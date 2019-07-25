@@ -21,6 +21,9 @@
 </template>
 
 <style>
+body{
+  color: #333;
+}
 .fade-enter-active, .fade-leave-active {
   transition: all .2s ease;
 }
@@ -36,6 +39,9 @@
   height: 1px;
   background: #ddd;
   margin: 40px 0;
+}
+.router-link-exact-active{
+  color: hotpink;
 }
 </style>
 

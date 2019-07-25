@@ -25,16 +25,16 @@
       </div>
       <div class="bullshit">
         <div class="bullshit__oops">
-          OOPS!
+          Oh! 页面找不到了!
         </div>
-        <div class="bullshit__info">
+        <!-- <div class="bullshit__info">
           版权所有
           <a
             class="link-type"
             href="https://wallstreetcn.com"
             target="_blank"
           >华尔街见闻</a>
-        </div>
+        </div> -->
         <div class="bullshit__headline">
           {{ message }}
         </div>
@@ -42,7 +42,7 @@
           请检查您输入的网址是否正确，请点击以下按钮返回主页或者发送错误报告
         </div>
         <a
-          href=""
+          href="/"
           class="bullshit__return-home"
         >返回首页</a>
       </div>
@@ -64,7 +64,7 @@ export default {
   },
   computed: {
     message() {
-      return '特朗普说这个页面你不能进......'
+      return '我是谁？ 我在哪？ ......'
     }
   }
 }
@@ -98,6 +98,7 @@ export default {
         animation-timing-function: linear;
         animation-fill-mode: forwards;
         animation-delay: 1s;
+        animation-iteration-count: infinite;
       }
       &.mid {
         width: 46px;
@@ -109,6 +110,7 @@ export default {
         animation-timing-function: linear;
         animation-fill-mode: forwards;
         animation-delay: 1.2s;
+        animation-iteration-count: infinite;
       }
       &.right {
         width: 62px;
@@ -120,6 +122,7 @@ export default {
         animation-timing-function: linear;
         animation-fill-mode: forwards;
         animation-delay: 1s;
+        animation-iteration-count: infinite;
       }
       @keyframes cloudLeft {
         0% {

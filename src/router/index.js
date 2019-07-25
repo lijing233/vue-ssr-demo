@@ -12,8 +12,8 @@ export function createRouter () {
       { path: '/', component: () => import('@/pages/Home.vue') },
       { path: '/test', component: () => import('@/pages/Test.vue') },
       { path: '/store', component: () => import('@/pages/Store.vue') },
-      { path: '/404', component: () => import('@/pages/errorPage/404.vue') },
       { path: '/500', component: () => import('@/pages/errorPage/500.vue') },
+      { path: '*', component: () => import('@/pages/errorPage/404.vue') },
     ]
   })
 }
