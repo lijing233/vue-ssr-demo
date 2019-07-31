@@ -20,10 +20,7 @@
   </div>
 </template>
 
-<style>
-body{
-  color: #333;
-}
+<style lang="scss">
 .fade-enter-active, .fade-leave-active {
   transition: all .2s ease;
 }

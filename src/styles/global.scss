@@ -1,23 +1,131 @@
-html {
-  height: 100%;
-  box-sizing: border-box;
+html,
+body,
+div,
+ul,
+li,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+dl,
+dt,
+dd,
+ol,
+form,
+input,
+textarea,
+th,
+td,
+select {
+  margin: 0;
+  padding: 0;
+  box-sizing:border-box;
+  -o-box-sizing:border-box;
+  -ms-box-sizing:border-box;
+  -moz-box-sizing:border-box;
+  -webkit-box-sizing:border-box;
+  -webkit-tap-highlight-color: transparent;
+  font-weight:normal;
+}
+html,
+body,
+div,
+ul,
+li,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+dl,
+dt,
+dd,
+ol,
+form,
+th,
+td,
+select {
+-webkit-touch-callout: none; /* iOS Safari */
+-webkit-user-select: none; /* Chrome/Safari/Opera */
+-khtml-user-select: none; /* Konqueror */
+-moz-user-select: none; /* Firefox */
+-ms-user-select: none; /* Internet Explorer/Edge */
+user-select: none; /* Non-prefixed version, currently
+not supported by any browser */
 }
 
-#app{
-  height: 100%;
+// 小米6 无法正常输入
+*:not(input,textarea) {
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
 }
-
-
-
-a:focus,
-a:active {
+*{
+   margin: 0;
+   padding: 0; 
+}
+i {
+ font-style: normal; 
+}
+fieldset {
+  border: none;
+  padding:0;
+  margin:0;
+}
+*:focus { 
   outline: none;
+  background-color: transparent;
+}
+a {
+  color:#333;
+  text-decoration: none;
+  -webkit-tap-highlight-color: transparent;
+  /*去除苹果手机input框会有输入灰色背景*/
 }
 
-a,
-a:focus,
-a:hover {
-  cursor: pointer;
-  color: inherit;
-  text-decoration: none;
+li{
+  list-style: none;
+}
+
+input,
+textarea {
+  outline: none;
+  box-shadow: none;
+  -webkit-appearance: none;
+  /*去除苹果手机input默认样式*/
+  -webkit-tap-highlight-color: transparent;
+  /*去除苹果手机input框会有输入灰色背景*/
+  border: none;
+}
+
+.ellipsis {
+  display: block;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+}
+.double-ellipsis {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+
+html {
+  width: 100%;
+  height: 100%;
+  // background: #f5f5f5;
+}
+
+body {
+  color: #333;
+  width: 100%;
+  height: 100%;
 }

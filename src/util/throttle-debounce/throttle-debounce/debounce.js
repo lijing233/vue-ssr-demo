@@ -17,5 +17,5 @@ var throttle = require('./throttle');
  * @return {Function} A new, debounced function.
  */
 module.exports = function ( delay, atBegin, callback ) {
-	return callback === undefined ? throttle(delay, atBegin, false) : throttle(delay, callback, atBegin !== false);
+  return callback === undefined ? throttle(delay, atBegin, false) : throttle(delay, callback, atBegin !== false);
 };
