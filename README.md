@@ -61,6 +61,39 @@ Koa2
 
   
 
+## 本地环境添加了proxy解决client请求跨域问题
+
+使用Koa Proxies插件实现node代理
+
+```
+$ npm install koa-proxies --save
+```
+
+```js
+app.use(proxy('/proxy', {
+  target: 'http://10.163.0.92:49000',
+  changeOrigin: true,
+  rewrite: path => path.replace(/^\/proxy/, ''),
+  logs: true
+}))
+```
+
+因为服务端请求接口不存在跨域，使用环境变量对axios的baseUrl做区分，保证client和server环境正常运行
+
+```js
+const getBaseUrl = () => {
+  if (process.env.ENV_CONFIG.ENV === 'dev' && process.env.VUE_ENV === 'client') {
+    return process.env.ENV_CONFIG.TARGET_API
+  } else {
+    return process.env.ENV_CONFIG.BASE_API
+  }
+}
+```
+
+
+
+## 使用文件对环境进行区分
+
 
 
 ## 注意事项
@@ -105,6 +138,18 @@ done! -- 0716
 - [ ] 服务端 404 500 重定向到对应页面待处理
 
 ### 9.了解service worker & SWPrecachePlugin插件
+
+### 10.起本地环境保存后，axios拦截器被重复注册
+
+目前用条件判断进行修复，待查询问题根本原因
+
+```js
+if(axios.interceptors.request.handlers && axios.interceptors.request.handlers.length === 0) {
+ // ....
+}
+```
+
+
 
 
 
