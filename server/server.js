@@ -2,10 +2,12 @@ const Koa = require('koa')
 const path = require('path')
 const config = require('./config/server.config')
 const koaStatic = require('koa-static')
-const logger = require('koa-logger')
+// const logger = require('koa-logger')
+const proxy = require('koa-proxies')
 
 const resolve = file => path.resolve(__dirname, file)
 const isProd = process.env.NODE_ENV === 'production'
+const ENV_CONFIG = require(`../env_config/${process.env.env_config}.env`)
 const SSR = require('./ssr')
 
 // https证书问题会报错（待补充） 设置环境变量回避非授信证书的问题
@@ -24,12 +26,20 @@ if (isProd) {
       logsUtil.logResponse(ctx, intervals);     //记录响应日志
     } catch (error) {
       intervals = new Date() - start;
-      logsUtil.logError(ctx, error, intervals);//记录异常日志
+      logsUtil.logError(ctx, error, intervals); //记录异常日志
     }
   })
 }
 
-app.use(logger())
+// proxy
+console.log(!isProd && ENV_CONFIG.ENV === 'dev' && ENV_CONFIG.USE_PROXY === 'true');
+if (!isProd && ENV_CONFIG.ENV === 'dev' && ENV_CONFIG.USE_PROXY === 'true') {
+  console.log(config.proxy.base);
+  console.log(config.proxy.config);
+  app.use(proxy(config.proxy.base || '/proxy', config.proxy.config))
+}
+
+// app.use(logger())
 
 // 生成静态资源服务
 app.use(koaStatic(isProd ? resolve('../dist') : resolve('../public'), {

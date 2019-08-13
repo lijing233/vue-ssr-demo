@@ -1,20 +1,22 @@
 //wepback-base-conf.js
 const path = require('path');
-// const webpack = require('webpack');
+const webpack = require('webpack');
 const VueLoaderPlugin = require('vue-loader/lib/plugin')
 const FriendlyErrorsPlugin = require('friendly-errors-webpack-plugin')
 const OptimizeCSSPlugin = require('optimize-css-assets-webpack-plugin')
-const EslintFriendlyFormatterPlugin = require('eslint-friendly-formatter')
+// const EslintFriendlyFormatterPlugin = require('eslint-friendly-formatter')
 
 //把所有路径定位到项目工程根目录下
 function resolve(dir) {
   return path.resolve(__dirname, dir);
 }
 
+const ENV_CONFIG = require(`../env_config/${process.env.env_config}.env`)
+
 console.log('--当前环境--', process.env.NODE_ENV)
 const isProd = process.env.NODE_ENV === 'production'
 
-module.exports = {
+const baseConfig = {
   devtool: isProd ? 'none' : 'cheap-module-source-map', // 此选项控制是否生成，以及如何生成 source map
   mode: isProd ? 'production' : 'development',
   output: {
@@ -161,6 +163,13 @@ module.exports = {
   //     }
   //   }
   // }
-
-
 }
+
+baseConfig.plugins.push(
+  new webpack.DefinePlugin({
+    'process.env.ENV_CONFIG': JSON.stringify(ENV_CONFIG)
+  }),
+)
+
+
+module.exports = baseConfig;

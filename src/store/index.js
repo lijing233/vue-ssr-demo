@@ -20,9 +20,11 @@ export function createStore() {
     actions: {
       getHomeInfo({ commit }) {
         return axios.get('/homeInfo').then((res) => {
-          console.log('getHomeInfo', res.data);
-          console.log('111');
-          commit('setHomeInfo', res.data.data.name)
+          if (res && res.data) {
+            console.log('getHomeInfo', res.data);
+            console.log('111');
+            commit('setHomeInfo', res.data.data.name)
+          }
         })
       }
     }

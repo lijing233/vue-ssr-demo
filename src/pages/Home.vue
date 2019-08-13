@@ -22,14 +22,15 @@ export default {
       return this.$store.state.homeInfo
     }
   },
-  asyncData ({ store, route }) {
-    // 触发 action 后，会返回 Promise
-    // console.log('asyncData-Home', route);
-    return store.dispatch('getHomeInfo')
-  },
+  // asyncData ({ store, route }) {
+  //   // 触发 action 后，会返回 Promise
+  //   // console.log('asyncData-Home', route);
+  //   return store.dispatch('getHomeInfo')
+  // },
 
   mounted() {
     console.log('window.__INITIAL_STATE__', window.__INITIAL_STATE__);
+    this.$store.dispatch('getHomeInfo');
   },
 
   methods: {}

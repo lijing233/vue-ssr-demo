@@ -4,28 +4,32 @@ import Message from '@/plugins/Message'
 
 axios.defaults.withCredentials = true
 
-axios.interceptors.request.use(
-  config => {
 
-    return config
-  },
-  error => {
-    // Do something with request error
-    console.log(`interceptors-request-error${error}`) // for debug
-    Promise.reject(error)
-  }
-)
+// 解决本地环境 axios拦截器被多次注册问题
+if (axios.interceptors.request.handlers && axios.interceptors.request.handlers.length === 0) {
 
-axios.interceptors.response.use(
-  // 需添加与后端定义码值校验的操作
-  response => {
-    return response
-  },
-  error => {
-    console.log(`interceptors-response-error${error}`) // for debug
-    return Promise.resolve(error.response)
-  }
-)
+  axios.interceptors.request.use(
+    config => {
+      return config
+    },
+    error => {
+      // Do something with request error
+      console.log(`interceptors-request-error${error}`) // for debug
+      Promise.reject(error)
+    }
+  )
+
+  axios.interceptors.response.use(
+    // 需添加与后端定义码值校验的操作
+    response => {
+      return response
+    },
+    error => {
+      console.log(`interceptors-response-error${error}`) // for debug
+      return Promise.resolve(error.response)
+    }
+  )
+}
 
 const codeMessage = {
   200: '服务器成功返回请求的数据。',
@@ -47,7 +51,7 @@ const codeMessage = {
 
 // 检查接口状态码
 function checkStatus (response) {
-  if (response.status >= 200 && response.status < 300) {
+  if (response && response.status >= 200 && response.status < 300) {
     return response
   }
   const errortext = codeMessage[response.status] || response.statusText
@@ -84,13 +88,22 @@ function errorCatch (error) {
 
 // axios 默认值
 // axios.defaults.baseURL = process.env.VUE_APP_BASE_API
-axios.defaults.baseURL = ' https://www.easy-mock.com/mock/5a6586044e4c5c26414f5f6c/example'
+// axios.defaults.baseURL = 'https://www.easy-mock.com/mock/5a6586044e4c5c26414f5f6c/example'
 axios.defaults.headers.common['Content-Type'] = 'application/json'
 // axios.defaults.headers.common['token'] = jsCookie.get('token')
+
+const getBaseUrl = () => {
+  if (process.env.ENV_CONFIG.ENV === 'dev' && process.env.VUE_ENV === 'client') {
+    return process.env.ENV_CONFIG.TARGET_API
+  } else {
+    return process.env.ENV_CONFIG.BASE_API
+  }
+}
 
 export default {
   post (url, params) {
     return axios({
+      baseURL: getBaseUrl(),
       method: 'post',
       url: url,
       data: JSON.stringify(params)
@@ -98,6 +111,7 @@ export default {
   },
   get (url, params) {
     return axios({
+      baseURL: getBaseUrl(),
       method: 'get',
       url: url,
       data: JSON.stringify(params)
