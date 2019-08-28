@@ -7,7 +7,7 @@ const proxy = require('koa-proxies')
 
 const resolve = file => path.resolve(__dirname, file)
 const isProd = process.env.NODE_ENV === 'production'
-const ENV_CONFIG = require(`../env_config/${process.env.env_config}.env`)
+const ENV_CONFIG = require(`../env_config/${process.env.ENV_CONFIG}.env`)
 const SSR = require('./ssr')
 
 // https证书问题会报错（待补充） 设置环境变量回避非授信证书的问题
@@ -15,6 +15,7 @@ process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0'
 
 const app = new Koa()
 
+// 添加日志收集
 if (isProd) {
   const logsUtil = require('./utils/log.js');
   app.use(async (ctx, next) => {
@@ -31,7 +32,7 @@ if (isProd) {
   })
 }
 
-// proxy
+// proxy客户端本地环境接口代理
 console.log(!isProd && ENV_CONFIG.ENV === 'dev' && ENV_CONFIG.USE_PROXY === 'true');
 if (!isProd && ENV_CONFIG.ENV === 'dev' && ENV_CONFIG.USE_PROXY === 'true') {
   console.log(config.proxy.base);
